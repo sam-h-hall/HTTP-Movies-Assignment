@@ -34,7 +34,6 @@ const App = () => {
       </Route>
       <Route path="/movies/:id">
         <Movie
-          // {...props}
           addToSavedList={addToSavedList}
           setMovieList={setMovieList}
           getMovieList={getMovieList}
