@@ -12,7 +12,8 @@ export const EditMovie = ({ getMovieList }) => {
       .get(`http://localhost:5000/api/movies/${id}`)
       .then((res) => {
         console.log(res.data);
-        setMovie(res.data); // , JSON.parse(res.data.stars.join(", "))? then .split(", ") to turn back into array?, idk
+        setMovie(res.data);
+        movie.stars = res.data.stars.join(", ");
       })
       .catch((err) => console.log(err));
   }, []);
@@ -28,7 +29,10 @@ export const EditMovie = ({ getMovieList }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/movies/${id}`, movie)
+      .put(`http://localhost:5000/api/movies/${id}`, {
+        ...movie,
+        stars: movie.stars.split(", "),
+      })
       .then((res) => {
         console.log("EditMovie Res", res.data);
         getMovieList();
@@ -78,13 +82,13 @@ export const EditMovie = ({ getMovieList }) => {
           onChange={handleChange}
         />
         <br />
-        {/* <input
+        <input
           type="text"
           name="stars"
           placeholder={"stars"}
           onChange={handleChange}
-          value={starsArr.join(", ")} // add .split(", ") on submit
-        /> */}
+          value={movie.stars}
+        />
         <br />
         <button
           type="submit"
