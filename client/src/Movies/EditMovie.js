@@ -31,7 +31,7 @@ export const EditMovie = ({ getMovieList }) => {
     axios
       .put(`http://localhost:5000/api/movies/${id}`, {
         ...movie,
-        stars: movie.stars.split(", "),
+        stars: movie.stars.split(","),
       })
       .then((res) => {
         console.log("EditMovie Res", res.data);
@@ -82,7 +82,7 @@ export const EditMovie = ({ getMovieList }) => {
           onChange={handleChange}
         />
         <br />
-        <input
+        <textarea
           type="text"
           name="stars"
           placeholder={"stars"}
