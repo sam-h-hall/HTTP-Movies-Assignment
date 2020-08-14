@@ -6,7 +6,7 @@ import MovieCard from "./MovieCard";
 function Movie({ addToSavedList, getMovieList }) {
   const [movie, setMovie] = useState(null);
   const params = useParams();
-  const history = useHistory();
+  const { goBack } = useHistory();
 
   const fetchMovie = (id) => {
     axios
@@ -19,14 +19,9 @@ function Movie({ addToSavedList, getMovieList }) {
     e.preventDefault();
     axios
       .delete(`http://localhost:5000/api/movies/${movie.id}`)
-      .then((res) => {
-        // // response data does not contain array of movies --> just ID
-        // console.log("Res", res);
-        // setMovieList(res.data);
-        // // window.location.reload(history.push("/movies"));
-        // history.goBack();
+      .then(() => {
         getMovieList();
-        history.goBack();
+        goBack();
       })
       .catch((err) => console.log("Error ", err.message));
   };
@@ -64,3 +59,9 @@ function Movie({ addToSavedList, getMovieList }) {
 }
 
 export default Movie;
+
+// // response data does not contain array of movies --> just ID
+// console.log("Res", res);
+// setMovieList(res.data);
+// // window.location.reload(history.push("/movies"));
+// history.goBack();

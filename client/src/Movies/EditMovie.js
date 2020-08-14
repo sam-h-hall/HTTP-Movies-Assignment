@@ -4,30 +4,24 @@ import axios from "axios";
 
 export const EditMovie = ({ getMovieList }) => {
   const [movie, setMovie] = useState({});
-  // gives us actual id instead of id object
   const { id } = useParams();
-  const { push, goBack } = useHistory();
+  const { goBack } = useHistory();
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/api/movies/${id}`)
       .then((res) => {
         console.log(res.data);
-        setMovie(res.data);
+        setMovie(res.data); // , JSON.parse(res.data.stars.join(", "))? then .split(", ") to turn back into array?, idk
       })
       .catch((err) => console.log(err));
   }, []);
 
   const handleChange = (e) => {
     e.persist();
-    let value = e.target.value;
-    // if (e.target.name === "metascore") {
-    //   value = parseInt(value);
-    // }
-
     setMovie({
       ...movie,
-      [e.target.name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -83,6 +77,14 @@ export const EditMovie = ({ getMovieList }) => {
           placeholder="metascore"
           onChange={handleChange}
         />
+        <br />
+        {/* <input
+          type="text"
+          name="stars"
+          placeholder={"stars"}
+          onChange={handleChange}
+          value={starsArr.join(", ")} // add .split(", ") on submit
+        /> */}
         <br />
         <button
           type="submit"
